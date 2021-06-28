@@ -8,7 +8,7 @@ import os
 def hello(request):
 
    #These objects will be fetched from the XML File
- xmldoc = ET.parse('/Users/chirasvi/Django/myproject/myapp/bpg.xml')
+ xmldoc = ET.parse('bpg.xml')
  root = xmldoc.getroot()
  service = UspsServices()
  serviceList = []
