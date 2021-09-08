@@ -20,7 +20,7 @@ jobs:
     - name: Set up Python version
       uses: actions/setup-python@v1
       with:
-        python-version: '3.7'
+        python-version: '3.8'
 
     - name: Create and start virtual environment
       run: |
@@ -59,4 +59,4 @@ jobs:
         with:
           app-name: 'bpgdev-sid-sandbox'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_ac72d5c2770c4df8ad597aa9944d6a82 }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_7e200bde59d740ca8de75def98f37a11 }}
