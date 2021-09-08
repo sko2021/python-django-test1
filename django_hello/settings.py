@@ -70,6 +70,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_hello.wsgi.application'
 
+ALLOWED_HOSTS = ['https://hsatestdomain.com', 'localhost', '127.0.0.1']
+
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
