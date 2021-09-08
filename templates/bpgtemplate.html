@@ -17,18 +17,15 @@ var approvedNum = id;
 var descNum = "desc"+id;
 var dropText = "more"+id;
 var origin = window.location.protocol + "//" + window.location.host + ctx;
-console.log(id);
-console.log(ctx);
-console.log(document.getElementById(descNum).style.display);
 if(document.getElementById(approvedNum).alt == "image of plus symbol"){
-	document.getElementById(approvedNum).src = "https://gateway.usps.com/eAdmin/images/gui/bkg/icons/minus-grey.png";
+	document.getElementById(approvedNum).src = "{% static 'icons/minus-grey.png' %}";
 	document.getElementById(approvedNum).alt = "image of minus symbol";
 	document.getElementById(descNum).style.display = "block";
 	document.getElementById(dropText).alt = "less"+id;
 	document.getElementById(dropText).title = "Click to minimize";
 	document.getElementById(dropText).innerHTML = "less info >";
 }else{
-	document.getElementById(approvedNum).src = "https://gateway.usps.com/eAdmin/images/gui/bkg/icons/plus-grey.png";
+	document.getElementById(approvedNum).src = "{% static 'icons/plus-grey.png' %}";
 	document.getElementById(approvedNum).alt = "image of plus symbol";
 	document.getElementById(descNum).style.display = "none";
 	document.getElementById(dropText).alt = "more"+id;
@@ -44,18 +41,18 @@ if(document.getElementById(approvedNum).alt == "image of plus symbol"){
 <meta name="description" content="" />
 
 <link rel="shortcut icon"
-	href="https://gateway.usps.com/eAdmin/images/favicon.ico"
+	href="{% static 'icons/favicon.ico' %}" 
 	type="image/x-icon">
 
 <link rel="stylesheet"
-	href="https://gateway.usps.com/eAdmin/styles/gui/common-usps.css"
+	href="{% static 'styles/common-usps.css' %}"
 	type="text/css" media="all" />
 <link rel="stylesheet"
-	href="https://gateway.usps.com/eAdmin/styles/gui/bcg.css"
+	href="{% static 'styles/bcg.css' %}"
 	type="text/css" media="all" />
 
-<link type="text/css" href="https://gateway.usps.com/eAdmin/styles/bootstrap-iso.css" rel="Stylesheet" />
-<link type="text/css" href="https://gateway.usps.com/eAdmin/styles/gui/redesign.css"	rel="Stylesheet" />
+<link type="text/css" href="{% static 'styles/bootstrap-iso.css' %}" rel="Stylesheet"/>
+<link type="text/css" href="{% static 'styles/redesign.css' %}" rel="Stylesheet" />
 
 </head>
 
@@ -72,12 +69,12 @@ if(document.getElementById(approvedNum).alt == "image of plus symbol"){
 								<div class="nav navbar-header" id="navbarAfterLogin">
 									<div class="row navbar-nav mb-0 pb-0" style="padding-top: 1%;">
 										<img
-											src="https://gateway.usps.com/eAdmin/images/gui/usps-logo-withouttext.png"
+											src="{% static 'images/usps-logo-withouttext.png' %}"
 											class="img-fluid " height="20px" title="USPS logo"
 											alt="USPS logo image of blue eagle" /> <a
 											href="https://gateway.usps.com/eAdmin/action/homepage">
 											<img							
-											src="USPS-BusinessPartnerGateway.png"
+											src="{% static 'images/USPS-BusinessPartnerGateway.png' %}"
 											class="img-fluid" tabindex="16"
 											title="Link to Business Customer Gateway's Home Page"
 											alt="Image for Business Customer Gateway's Home Page link"
@@ -289,7 +286,7 @@ if(document.getElementById(approvedNum).alt == "image of plus symbol"){
 									
 									
 										<img title="" width="232" height="150"
-											src="https://gateway.usps.com/eAdmin/images/gui/hcs_image.png"
+											src="{% static 'images/hcs_image.png' %}"
 											alt="image of parked postal trucks">
 									
 								
@@ -330,23 +327,22 @@ if(document.getElementById(approvedNum).alt == "image of plus symbol"){
 		
 
 			<!-- Go To Services box -->
-			<!-- Kishore START Dynamic Changes-->
-			<h2> START of generating Dynamic Data </h2>
+			<!-- Sid START Dynamic Changes-->
 			{% for lst in serviceList %}
-				<div class="messageServices request" id="a1284323">
+				<div class="messageServices request" id="a1284323{{lst.id}}">
 				<div class="service-line box-shadow-services clearfix">
  					
  					<div class = "row">
  						<div class = "col-md-8 col-sm-8 service-font">
- 							<img src="https://gateway.usps.com/eAdmin/images/gui/bkg/icons/plus-grey.png"
-							 id="0" tabindex="37"
-							onclick='showHideDesc(0, ctx)' alt="image of plus symbol" style="cursor:pointer;">
+ 							<img src="{% static 'icons/plus-grey.png' %}"
+							 id="{{lst.id}}" tabindex="37{{lst.id}}"
+							onclick="showHideDesc({{lst.id}}, ctx)" alt="image of plus symbol" style="cursor:pointer;">
 							{{lst.serviceName}}&nbsp;&nbsp; 
 							
 							<span class="smaller"> 
-								<a href="#/" class="underline" tabindex="38"
-									onclick="showHideDesc(0, ctx)" title="Click to learn more about {{lst.serviceName}}"
-									id="more0" alt="Click to learn more about ">more info >
+								<a href="#/" class="underline" tabindex="38{{lst.id}}"
+									onclick="showHideDesc({{lst.id}}, ctx)" title="Click to learn more about {{lst.serviceName}}"
+									id="more{{lst.id}}" alt="Click to learn more about {{lst.serviceName}}">more info >
 								</a> 
 							</span>
  						</div>
@@ -377,7 +373,7 @@ if(document.getElementById(approvedNum).alt == "image of plus symbol"){
  					<!-- Service description -->
  					<div class = "row">
 	 					<div class="col-md-11 col-sm-11"> 
-							<div class="text-justify" id="desc0" style="display: none; margin-left: 25px;">
+							<div class="text-justify" id="desc{{lst.id}}" style="display: none; margin-left: 25px;">
 								<p class="text" style="margin-left: 25px;">
 									{{lst.serviceDescription}}																	
 								</p>
@@ -389,253 +385,8 @@ if(document.getElementById(approvedNum).alt == "image of plus symbol"){
 				</div>
 			</div>
 			{% endfor %}
-			<h2> END of generating Dynamic Data </h2>
-			<!-- Kishore END Dynamic Changes-->
-			<!-- start  message --->
-			<div class="messageServices request" id="a12843230">
-				<div class="service-line box-shadow-services clearfix">
- 					
- 					<div class = "row">
- 						<div class = "col-md-8 col-sm-8 service-font">
- 							<img src="https://gateway.usps.com/eAdmin/images/gui/bkg/icons/plus-grey.png"
-							id="12" tabindex="370"
-							onclick="showHideDesc(12, ctx)" alt="image of plus symbol" style="cursor:pointer;">
-							Freight Auction&nbsp;&nbsp; 
-							
-							<span class="smaller"> 
-								<a href="#/" class="underline" tabindex="380"
-									onclick="showHideDesc(11, ctx)" title="Click to learn more about Freight Auction"
-									id="more11" alt="Click to learn more about Freight Auction">more info >
-								</a> 
-							</span>
- 						</div>
-
- 						<div class = "col-md-3 col-sm-3 text-right" style="margin-top: 5px;">
-							
-								
-								
-									<!-- begin Request Access button-->
-									<a title="Go to Service" href="https://prodp1.usps.com/adminweb/view.htm?requestPage=P1BALANCEFEES" tabindex="39">
-												<button class="btn btn-sm btn-primary service-button" alt="Go to Freight Auction service button" type="button">
-													<span class="service-link">Go to Service</span> 
-												</button>
-											</a>								
-								
- 								
-							
- 						</div>
- 					</div>
- 					
- 					<!-- Service description -->
- 					<div class = "row">
-	 					<div class="col-md-11 col-sm-11"> 
-							<div class="text-justify" id="desc0" style="display: none; margin-left: 25px;">
-								<p class="text" style="margin-left: 25px;">
-									Suppliers have the ability to accept or decline transportation based on a set rate.
-									
-									
-								</p>
-							</div>
-	 					</div>
-					</div>
-					<!-- end of Service description -->
-					
-				</div>
-			</div>
- 			
-		
-
-			<!-- Go To Services box -->
-			<!-- start  message --->
-			<div class="messageServices request" id="a1284324">
-				<div class="service-line box-shadow-services clearfix">
- 					
- 					<div class = "row">
- 						<div class = "col-md-8 col-sm-8 service-font">
- 							<img src="https://gateway.usps.com/eAdmin/images/gui/bkg/icons/plus-grey.png"
-							id=1 tabindex="46"
-							onclick="showHideDesc(1, ctx)" alt="image of plus symbol" style="cursor:pointer;">
-							Contract Services&nbsp;&nbsp; 
-							
-							<span class="smaller"> 
-								<a href="#/" class="underline" tabindex="47"
-									onclick="showHideDesc(1, ctx)" title="Click to learn more about services available to manage your contracts."
-									id="more1" alt="Click to learn more about services available to manage your contracts.">more info >
-								</a> 
-							</span>
- 						</div>
-
- 						<div class = "col-md-3 col-sm-3 text-right" style="margin-top: 5px;">
-							
-								
-								
-									<!-- begin Request Access button-->
-									<span class="hasHover"> 
-										<a tabindex="49" id="Request Access" href="https://gateway.usps.com/eAdmin/action/manageservices/manageByService?securityID=1284324" title="Get Access" class="buttons"><button class="btn btn-sm btn-default service-button" type="button" alt="HCR Manifests Get Access button">
-														<strong>Get Access</strong>
-												</button></a>
-									</span> 
-								
-								
- 								
-							
- 						</div>
- 					</div>
- 					
- 					<!-- Service description -->
- 					<div class = "row">
-	 					<div class="col-md-11 col-sm-11"> 
-							<div class="text-justify" id="desc1" style="display: none; margin-left: 25px;">
-								<p class="text"  style="margin-left: 25px;">
-									Suppliers have the ability to manage their contractual relationship with the US Postal Service including manifests (schedule), invoice and payment status.
-								</p>
-							</div>
-	 					</div>
-					</div>
-					<!-- end of Service description -->
-					
-				</div>
-			</div>
- 			
-		
-
-			<!-- TRANSPORTATION PROCUREMENT SERVICES-->
-			<!-- start  message --->
-			<div class="messageServices request" id="a1284325">
-				<div class="service-line box-shadow-services clearfix">
- 					
- 					<div class = "row">
- 						<div class = "col-md-8 col-sm-8 service-font">
- 							<img src="https://gateway.usps.com/eAdmin/images/gui/bkg/icons/plus-grey.png"
-							id=2 tabindex="55"
-							onclick="showHideDesc(2, ctx)" alt="image of plus symbol" style="cursor:pointer;">
-							Transportation Procurement Services&nbsp;&nbsp; 
-							
-							<span class="smaller"> 
-								<a href="#/" class="underline" tabindex="56"
-									onclick="showHideDesc(2, ctx)" title="Click to learn more about Transportation Procurement Services"
-									id="more2" alt="Click to learn more about Transportation Procurement Services">more info >
-								</a> 
-							</span>
- 						</div>
-
- 						<div class = "col-md-3 col-sm-3 text-right" style="margin-top: 5px;">
-									<!-- begin Request Access button-->
-									<span class="hasHover"> 
-										<a tabindex="58" id="Request Access" href="https://gateway.usps.com/eAdmin/action/manageservices/manageByService?securityID=1284325" title="Get Access" class="buttons"><button class="btn btn-sm btn-default service-button" type="button" alt="Transportation Procurement Services Get Access button">
-														<strong>Get Access</strong>
-												</button></a>
-									</span> 
- 						</div>
- 					</div>
- 					
- 					<!-- Service description -->
- 					<div class = "row">
-	 					<div class="col-md-11 col-sm-11"> 
-							<div class="text-justify" id="desc2" style="display: none; margin-left: 25px;">
-								<p class="text" style="margin-left: 25px;">
-									Supplier has the ability to manage Transportation Procurement Services here... (refine description)
-								</p>
-							</div>
-	 					</div>
-					</div>
-					<!-- end of Service description -->
-					
-				</div>
-			</div>
-			<!-- END OF:  TRANSPORTATION PROCUREMENT SERVICES-->
-
-			<!-- STAF -->
-			<!-- start  message --->
-			<div class="messageServices request" id="a1284325">
-				<div class="service-line box-shadow-services clearfix">
- 					
- 					<div class = "row">
- 						<div class = "col-md-8 col-sm-8 service-font">
- 							<img src="https://gateway.usps.com/eAdmin/images/gui/bkg/icons/plus-grey.png"
-							id=2 tabindex="55"
-							onclick="showHideDesc(3, ctx)" alt="image of plus symbol" style="cursor:pointer;">
-							Automated Forms (Surface Transportation Automated Forms)&nbsp;&nbsp; 
-							
-							<span class="smaller"> 
-								<a href="#/" class="underline" tabindex="56"
-									onclick="showHideDesc(3, ctx)" title="Click to learn more about . Automated Forms (Surface Transportation Automated Forms)"
-									id="more2" alt="Click to learn more about . Automated Forms (Surface Transportation Automated Forms)">more info >
-								</a> 
-							</span>
- 						</div>
-
- 						<div class = "col-md-3 col-sm-3 text-right" style="margin-top: 5px;">
-									<!-- begin Request Access button-->
-									<span class="hasHover"> 
-										<a tabindex="58" id="Request Access" href="https://gateway.usps.com/eAdmin/action/manageservices/manageByService?securityID=1284325" title="Get Access" class="buttons"><button class="btn btn-sm btn-default service-button" type="button" alt="Transportation Procurement Services Get Access button">
-														<strong>Get Access</strong>
-												</button></a>
-									</span> 
- 						</div>
- 					</div>
- 					
- 					<!-- Service description -->
- 					<div class = "row">
-	 					<div class="col-md-11 col-sm-11"> 
-							<div class="text-justify" id="desc2" style="display: none; margin-left: 25px;">
-								<p class="text" style="margin-left: 25px;">
-									Supplier has the ability to manage . Automated Forms (Surface Transportation Automated Forms) here... (refine description)
-								</p>
-							</div>
-	 					</div>
-					</div>
-					<!-- end of Service description -->
-					
-				</div>
-			</div>
-			<!-- END OF:  STAF -->
-		
-			<!-- TRANSPORTATION VISIBILITY and PERFORMANCE -->
-			<!-- start  message --->
-			<div class="messageServices request" id="a1284325">
-				<div class="service-line box-shadow-services clearfix">
- 					
- 					<div class = "row">
- 						<div class = "col-md-8 col-sm-8 service-font">
- 							<img src="https://gateway.usps.com/eAdmin/images/gui/bkg/icons/plus-grey.png"
-							id=2 tabindex="55"
-							onclick="showHideDesc(4, ctx)" alt="image of plus symbol" style="cursor:pointer;">
-							Transportation Visibility &amp; Performance&nbsp;&nbsp; 
-							
-							<span class="smaller"> 
-								<a href="#/" class="underline" tabindex="56"
-									onclick="showHideDesc(4, ctx)" title="Click to learn more about Transportation Visibility &amp; Performance"
-									id="more2" alt="Click to learn more about Transportation Visibility &amp; Performance">more info >
-								</a> 
-							</span>
- 						</div>
-
- 						<div class = "col-md-3 col-sm-3 text-right" style="margin-top: 5px;">
-									<!-- begin Request Access button-->
-									<span class="hasHover"> 
-										<a tabindex="58" id="Request Access" href="https://gateway.usps.com/eAdmin/action/manageservices/manageByService?securityID=1284325" title="Get Access" class="buttons"><button class="btn btn-sm btn-default service-button" type="button" alt="Transportation Procurement Services Get Access button">
-														<strong>Get Access</strong>
-												</button></a>
-									</span> 
- 						</div>
- 					</div>
- 					
- 					<!-- Service description -->
- 					<div class = "row">
-	 					<div class="col-md-11 col-sm-11"> 
-							<div class="text-justify" id="desc2" style="display: none; margin-left: 25px;">
-								<p class="text" style="margin-left: 25px;">
-									Supplier has the ability to manage Transportation Visibility &amp; Performance here... (refine description)
-								</p>
-							</div>
-	 					</div>
-					</div>
-					<!-- end of Service description -->
-					
-				</div>
-			</div>
-			<!-- END OF:  TRANSPORTATION VISIBILITY and PERFORMANCE -->
+			<!-- Sid END Dynamic Changes-->
+			
 
 
 		<!-- end OTHER SERVICES -->
@@ -656,7 +407,7 @@ if(document.getElementById(approvedNum).alt == "image of plus symbol"){
 			</div>
 		<div style="display: none;"><input type="hidden" name="_sourcePage" value="6Gats09WA7E09gmaQyWl1kVkq0yXTIF2RU_pdq80UJ319uf92GkEVovPntwdcYvs1U0HS0_vKuo=" /><input type="hidden" name="__fp" value="r_clNIa3jsvuuSoZ7ddKpw==" /></div></form>
 		<script
-			src="https://gateway.usps.com/eAdmin/scripts/additionalservices/otherServices.js"></script>
+			src="{% static 'scripts/additionalservices/otherServices.js' %}"></script>
 	
 		</div>
 		<!-- end page-section-->
@@ -777,8 +528,8 @@ if(document.getElementById(approvedNum).alt == "image of plus symbol"){
 </div>
 		<!-- End footer -->
 <!-- FHH COMMENTED OUT
-<link rel="stylesheet" href="https://gateway.usps.com/eAdmin/styles/footer.css" type="text/css" media="all" />
-<script type="text/javascript" src="https://gateway.usps.com:443https://gateway.usps.com/eAdmin/scripts/support.js"></script>
+<link rel="stylesheet" href="{% static 'styles/footer.css' %}" type="text/css" media="all" />
+<script type="text/javascript" src="{% static 'scripts/support.js' %}"></script>
 -->	
 
 				<!-- End footer -->
@@ -802,7 +553,7 @@ if(document.getElementById(approvedNum).alt == "image of plus symbol"){
 	</div>
 
 	 <!-- Bootstrap -->
-	 <script src="https://gateway.usps.com/eAdmin/scripts/bootstrap/bootstrap.min.js"></script>
-	 <script src="https://gateway.usps.com/eAdmin/scripts/timeout/timeout.js"></script>
+	 <script src="{% static 'scripts/bootstrap/bootstrap.min.js' %}"></script>
+	 <script src="{% static 'scripts/timeout/timeout.js' %}"</script>
 </body>
 	</html>
